@@ -1,3 +1,4 @@
+import { Avatar } from "@rneui/themed";
 import { useEffect, useState } from "react";
 import {
   View,
@@ -32,10 +33,19 @@ const MembersScreen = () => {
         keyExtractor={(person) => person.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.itemContainer}>
+            {item.image ? (
+              <Avatar size={96} rounded source={{ uri: item.image.url }} />
+            ) : (
+              <Avatar
+                size={96}
+                rounded
+                icon={{ name: "user", type: "font-awesome", color: "blue" }}
+              /> // You need to define a default avatar component or image
+            )}
             <Text style={styles.title}>
-              {item.first_name} {item.last_Name}
+              {item.first_name} {item.last_name}
             </Text>
-            <Text>{item.birthday}</Text>
+            <Text style={styles.text}>{item.city}</Text>
           </TouchableOpacity>
         )}
       />
@@ -48,13 +58,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemContainer: {
-    padding: 20,
+    padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
   },
   title: {
     fontSize: 18,
     fontWeight: "bold",
+    padding: 8,
+  },
+  text: {
+    padding: 8,
   },
 });
 
