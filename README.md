@@ -11,3 +11,4 @@ Functions:
 - The second page is a page were all parliament members are displayed
 - All parliament members have their own avatar
 - Searchbar has been added to find the wanted parliament member by typing the firstname or the last name in the searchbar
+- React Navigation is used for navigating between the pages
