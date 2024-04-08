@@ -5,7 +5,7 @@ import { View, Text, Button, StyleSheet } from "react-native";
 const Homescreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Välkommen till Ålands landsting</Text>
+      <Text style={styles.text}>Välkommen till Ålands lagting</Text>
       <Button
         title="Visa ledarmöter"
         onPress={() => navigation.navigate("Members")}

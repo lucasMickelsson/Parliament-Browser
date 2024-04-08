@@ -1,4 +1,4 @@
-import { Avatar } from "@rneui/themed";
+import { Avatar, SearchBar } from "@rneui/themed";
 import { useEffect, useState } from "react";
 import {
   View,
@@ -6,10 +6,14 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 
 const MembersScreen = () => {
   const [members, setMembers] = useState([]);
+  const [fullData, setFullData] = useState([]);
+  const [search, setSearch] = useState("");
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchParliamentMembers() {
@@ -19,15 +23,52 @@ const MembersScreen = () => {
         );
         const data = await response.json();
         setMembers(data);
+        setFullData(data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     }
     fetchParliamentMembers();
   }, []);
 
+  const handleSearch = (search) => {
+    setSearch(search);
+    const filteredData = fullData.filter((member) => {
+      return contains(member, search);
+    });
+    setMembers(filteredData);
+  };
+
+  const contains = ({ first_name, last_name }, searchQuery) => {
+    if (first_name.includes(searchQuery) || last_name.includes(searchQuery)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <View>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
+      <SearchBar
+        placeholder="Sök efter ledarmöter"
+        placeholderTextColor="black"
+        onChangeText={(query) => {
+          handleSearch(query);
+        }}
+        value={search}
+        inputStyle={{ color: "black" }}
+        lightTheme
+      />
       <FlatList
         data={members}
         keyExtractor={(person) => person.id.toString()}
