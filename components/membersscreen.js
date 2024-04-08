@@ -42,11 +42,7 @@ const MembersScreen = () => {
   };
 
   const contains = ({ first_name, last_name }, searchQuery) => {
-    if (first_name.includes(searchQuery) || last_name.includes(searchQuery)) {
-      return true;
-    } else {
-      return false;
-    }
+    return first_name.includes(searchQuery) || last_name.includes(searchQuery);
   };
 
   if (isLoading) {
